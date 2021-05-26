@@ -41,5 +41,5 @@ app.post('/posts',async(req,res)=>{
 })  
 
 app.listen(4000, () => {
-    console.log('Listening on port 4000')
+    console.log('POSTS Listening on port 4000')
 })
