@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const app = express()
 const {randomBytes} = require('crypto')
 const cors = require('cors')
+const axios = require('axios')
+
 
 app.use(bodyParser.json())
 app.use(cors())
@@ -15,13 +17,25 @@ app.get('/posts',(req,res)=>{
 
 })
 
-app.post('/posts',(req,res)=>{
+app.post('/posts',async(req,res)=>{
     const id = randomBytes(4).toString('hex')
     const { title } = req.body
 
     posts[id] = {
         id,title
     }
+
+    // send event to the event-broker
+    await axios.post('http://localhost:4005/events',{
+        type:'PostCreated',
+        data:{ id,title}
+    })
+
+    // receiving an event from the event bus - Post request handler 
+    app.post('/events',(req,res) => {
+        console.log('POSTS: Received Event',req.body.type)
+        res.send({})
+    })
 
     res.status(201).send(posts[id])
 })  
