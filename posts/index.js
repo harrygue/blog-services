@@ -26,7 +26,7 @@ app.post('/posts',async(req,res)=>{
     }
 
     // send event to the event-broker
-    await axios.post('http://localhost:4005/events',{
+    await axios.post('http://event-bus-srv:4005/events',{
         type:'PostCreated',
         data:{ id,title}
     })
@@ -41,5 +41,6 @@ app.post('/posts',async(req,res)=>{
 })  
 
 app.listen(4000, () => {
+    console.log('kubectl deployment test modified !!!!')
     console.log('POSTS Listening on port 4000')
 })

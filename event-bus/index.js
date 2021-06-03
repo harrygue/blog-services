@@ -15,21 +15,21 @@ app.post('/events',(req,res) => {
     events.push(event)
 
     // send event to posts
-    axios.post('http://localhost:4000/events',event)
+    axios.post('http://posts-clusterip-srv:4000/events',event)
     .catch(err => {
         console.log('SEND TO POSTS: ',err.message)
     })
 
     // send event to comments
-    axios.post('http://localhost:4001/events',event)
+    axios.post('http://comments-clusterip-srv:4001/events',event)
     .catch(err => console.log('SEND TO COMMENTS: ',err.message))
-
-    // send to query
-    axios.post('http://localhost:4002/events',event)
+ 
+    // // send to query
+    axios.post('http://query-clusterip-srv:4002/events',event)
     .catch(err => console.log('SEND TO QUERY: ',err.message))
-
-    // send to moderation
-    axios.post('http://localhost:4003/events',event)
+ 
+    // // send to moderation
+    axios.post('http://moderation-clusterip-srv:4003/events',event)
     .catch(err => console.log('SEND TO MODERATION: ',err.message))
 
     res.send({status:'OK'})

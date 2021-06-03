@@ -48,7 +48,7 @@ app.post('/events',(req,res) => {
 app.listen(4002,async() => {
     console.log('QUERY listen to 4002')
     // sync query service if it comes back online
-    const response = await axios.get('http://localhost:4005/events')
+    const response = await axios.get('http://event-bus-srv:4005/events')
 
     // loop through events to check which ones where missed
     for (let event of response.data){
